@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import GoalCard from "../components/GoalCard";
 
 function Dashboard() {
   const [goals, setGoals] = useState([]);
@@ -12,18 +13,14 @@ function Dashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div classname = "Dashboard container">
       <h1>Dashboard</h1>
       {goals.length === 0 ? (
         <p>No goals yet. Add one!</p>
       ) : (
-        <ul>
-          {goals.map((goal) => (
-            <li key={goal.id}>
-              <Link to={`/goals/${goal.id}`}>{goal.title}</Link>
-            </li>
-          ))}
-        </ul>
+        goals.map((goal) => (
+          <GoalCard key={goal.id} goal={goal} />
+        ))
       )}
     </div>
   );
