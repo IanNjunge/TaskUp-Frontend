@@ -40,3 +40,30 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Navbar tweaks */
+nav h1 {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+nav .links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* Dashboard */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.empty-message {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  margin-top: 3rem;
+  font-size: 1.1rem;
+}

@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
-
-function Navbar () {
+function Navbar() {
   return (
-    <div className="navbar">
-      <Link to="/">Dashboard</Link>
-      <Link to="/new-goal">New Goal</Link>
-    </div>
-  )
+    <nav>
+      <div className="container">
+        <h1>TaskUp</h1>
+        <div className="links">
+          <a href="/">Dashboard</a>
+          <a href="/new">New Goal</a>
+        </div>
+      </div>
+    </nav>
+  );
 }
-
 export default Navbar;

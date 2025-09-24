@@ -10,7 +10,7 @@ function App () {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/new-goal" element={<NewGoalForm />} />
+                <Route path="/new" element={<NewGoalForm />} />
                 <Route path="/goals/:id" element={<GoalDetail />} />
             </Routes>
         </div>

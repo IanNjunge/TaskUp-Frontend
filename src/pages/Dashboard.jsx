@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import GoalCard from "../components/GoalCard";
 
 function Dashboard() {
@@ -7,20 +6,26 @@ function Dashboard() {
 
   useEffect(() => {
     fetch("http://localhost:5000/goals")
-      .then((res) => res.json())
-      .then((data) => setGoals(data))
-      .catch((err) => console.error("Error fetching goals:", err));
+      .then(res => res.json())
+      .then(data => setGoals(data))
+      .catch(err => console.error("Error loading goals:", err));
   }, []);
 
   return (
-    <div classname = "Dashboard container">
-      <h1>Dashboard</h1>
-      {goals.length === 0 ? (
-        <p>No goals yet. Add one!</p>
+    <div className="container">
+      <div className="dashboard-header">
+        <h2>My Goals</h2>
+        <a href="/new">
+          <button>+ Add Goal</button>
+        </a>
+      </div>
+
+      {goals.length > 0 ? (
+        <div className="goal-list">
+          {goals.map(goal => <GoalCard key={goal.id} goal={goal} />)}
+        </div>
       ) : (
-        goals.map((goal) => (
-          <GoalCard key={goal.id} goal={goal} />
-        ))
+        <p className="empty-message">No goals yet. Add one!</p>
       )}
     </div>
   );
