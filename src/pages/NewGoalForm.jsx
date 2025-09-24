@@ -9,6 +9,14 @@ function NewGoalForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const newGoal = {
+      title,
+      description,
+      user_id: 1,
+      status : "pending",
+      priority: "medium"
+    }
+
     fetch("http://localhost:5000/goals", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
