@@ -6,8 +6,8 @@ function Navbar() {
       <div className="container">
         <h1 className="logo">TaskUp</h1>
         <div className="links">
-          <Link to="/" className="nav-link">Dashboard</Link>
-          <Link to="/new" className="nav-link">New Goal</Link>
+          <Link to="/" className="dash-link">Dashboard</Link>
+          <Link to="/new" className="new-goal-link">New Goal</Link>
         </div>
       </div>
     </nav>
