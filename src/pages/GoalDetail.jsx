@@ -7,6 +7,7 @@ function GoalDetail() {
   const [editing, setEditing] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("pending");
   const navigate = useNavigate();
 
   // Fetch the goal on mount
@@ -17,6 +18,7 @@ function GoalDetail() {
         setGoal(data);
         setTitle(data.title);
         setDescription(data.description || "");
+        setStatus(data.status || "pending");
       })
       .catch((err) => console.error("Error fetching goal:", err));
   }, [id]);
@@ -43,7 +45,7 @@ function GoalDetail() {
     fetch(`http://localhost:5000/goals/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, description }),
+      body: JSON.stringify({ title, description, status }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -71,11 +73,7 @@ function GoalDetail() {
             <button className="btn" onClick={() => setEditing(true)}>
               Edit Goal
             </button>
-            <button
-              className="btn"
-              style={{ marginLeft: "0.5rem", background: "red" }}
-              onClick={handleDelete}
-            >
+            <button className="btn delete-btn" onClick={handleDelete}>
               Delete Goal
             </button>
           </>
@@ -96,15 +94,18 @@ function GoalDetail() {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
+            <div>
+              <label>Status: </label>
+              <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                <option value="pending">Pending</option>
+                <option value="done">Done</option>
+              </select>
+            </div>
+
             <button className="btn" type="submit">
               Save
             </button>
-            <button
-              type="button"
-              className="btn"
-              style={{ marginLeft: "0.5rem", background: "gray" }}
-              onClick={() => setEditing(false)}
-            >
+            <button type="button" className="btn cancel-btn" onClick={() => setEditing(false)}>
               Cancel
             </button>
           </form>

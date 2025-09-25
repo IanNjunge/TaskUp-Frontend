@@ -1,103 +1,15 @@
-/* Global styles */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fff;
-  color: #000;
+  background-color: #f5f5f5; /* light gray background */
+  color: #1a1a1a;
 }
 
-.container {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Dashboard header */
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.dashboard-header h2 {
-  margin: 0;
-}
-
-.dashboard-header button {
-  padding: 0.5rem 1rem;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-/* Goal list layout */
-.goal-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-/* Goal card */
-.goal-card {
-  border: 1px solid #000;
-  padding: 1rem;
-  border-radius: 8px;
-  background-color: #fff;
-}
-
-.goal-card h3 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
-.goal-card p {
-  margin: 0.25rem 0;
-}
-
-/* GoalDetail page */
-.GoalDetail .card {
-  border: 1px solid #000;
-  padding: 1.5rem;
-  border-radius: 8px;
-  background-color: #fff;
-}
-
-.GoalDetail h1 {
-  margin-top: 0;
-}
-
-.GoalDetail p {
-  margin: 0.5rem 0;
-}
-
-.GoalDetail button {
-  padding: 0.5rem 1rem;
-  border: none;
-  cursor: pointer;
-  margin-top: 0.5rem;
-}
-
-.GoalDetail button.btn {
-  background-color: #000;
-  color: #fff;
-}
-
-.GoalDetail button.btn[style*="red"] {
-  background-color: #000;
-  color: #fff;
-}
-
-.GoalDetail input,
-.GoalDetail textarea,
-.GoalDetail select {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  margin-bottom: 1rem;
-  border: 1px solid #000;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #000;
+button {
+  font-family: inherit;
 }
