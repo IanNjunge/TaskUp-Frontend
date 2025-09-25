@@ -23,8 +23,8 @@ function NewGoalForm() {
   };
 
   return (
-    <div className="NewGoalForm container">
-      <h1>New Goal</h1>
+    <div className="">
+      <h1 classname="goal-form-title">New Goal</h1>
       <form onSubmit={handleSubmit} className="goal-form">
         <div className="form-group">
           <label>Title:</label>
