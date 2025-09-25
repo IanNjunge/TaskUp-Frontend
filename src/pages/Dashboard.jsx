@@ -11,6 +11,11 @@ function Dashboard() {
       .catch(err => console.error("Error loading goals:", err));
   }, []);
 
+  const handleQuickDelete = async (id) => {
+    await fetch(`http://localhost:5000/goals/${id}`, { method: "DELETE" });
+    setGoals(goals.filter(g => g.id !== id));
+  };
+
   return (
     <div className="container">
       <div className="dashboard-header">
@@ -22,7 +27,17 @@ function Dashboard() {
 
       {goals.length > 0 ? (
         <div className="goal-list">
-          {goals.map(goal => <GoalCard key={goal.id} goal={goal} />)}
+          {goals.map(goal => (
+            <div key={goal.id} style={{ display: "flex", alignItems: "center" }}>
+              <GoalCard goal={goal} />
+              <button
+                onClick={() => handleQuickDelete(goal.id)}
+                style={{ marginLeft: "0.5rem", background: "red", color: "white" }}
+              >
+                Delete
+              </button>
+            </div>
+          ))}
         </div>
       ) : (
         <p className="empty-message">No goals yet. Add one!</p>
