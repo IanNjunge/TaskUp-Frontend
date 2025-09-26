@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import GoalCard from "../components/GoalCard";
 
+const API_URL = import.meta.env.VITE_API_URL; // <-- Uses Vercel/Env variable
+
 function Dashboard() {
   const [goals, setGoals] = useState([]);
   const [stats, setStats] = useState({ total: 0, completed: 0, pending: 0 });
 
   useEffect(() => {
-    fetch("http://localhost:5000/goals")
+    fetch(`${API_URL}/goals`)
       .then((res) => res.json())
       .then((data) => {
         setGoals(data);
@@ -29,11 +31,15 @@ function Dashboard() {
     setGoals(updatedGoals);
     updateStats(updatedGoals);
 
-    await fetch(`http://localhost:5000/goals/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "completed" }),
-    });
+    try {
+      await fetch(`${API_URL}/goals/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "completed" }),
+      });
+    } catch (err) {
+      console.error("Error marking goal done:", err);
+    }
   };
 
   const handleDeleteGoal = async (id) => {
@@ -41,7 +47,11 @@ function Dashboard() {
     setGoals(updatedGoals);
     updateStats(updatedGoals);
 
-    await fetch(`http://localhost:5000/goals/${id}`, { method: "DELETE" });
+    try {
+      await fetch(`${API_URL}/goals/${id}`, { method: "DELETE" });
+    } catch (err) {
+      console.error("Error deleting goal:", err);
+    }
   };
 
   return (

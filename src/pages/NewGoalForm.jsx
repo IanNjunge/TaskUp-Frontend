@@ -1,34 +1,38 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL; // <-- Uses Vercel/Env variable
+
 function NewGoalForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:5000/goals", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title,
-        description,
-        status: "pending",
-        priority: "medium",
-        user_id: 1, // temporary hardcoded user
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to create goal");
-        return res.json();
-      })
-      .then(() => {
-        alert("Goal added!");
-        navigate("/");
-      })
-      .catch((err) => console.error("Error creating goal:", err));
+    try {
+      const res = await fetch(`${API_URL}/goals`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          description,
+          status: "pending",
+          priority: "medium",
+          user_id: 1, // temporary hardcoded user
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to create goal");
+
+      await res.json();
+      alert("Goal added!");
+      navigate("/");
+    } catch (err) {
+      console.error("Error creating goal:", err);
+      alert("Error creating goal. Please try again.");
+    }
   };
 
   return (

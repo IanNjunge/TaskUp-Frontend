@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL; // <-- Uses Vercel/Env variable
+
 function GoalDetail() {
   const { id } = useParams();
   const [goal, setGoal] = useState(null);
@@ -12,48 +14,55 @@ function GoalDetail() {
 
   // Fetch the goal
   useEffect(() => {
-    fetch(`http://localhost:5000/goals/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchGoal = async () => {
+      try {
+        const res = await fetch(`${API_URL}/goals/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch goal");
+        const data = await res.json();
         setGoal(data);
         setTitle(data.title);
         setDescription(data.description || "");
         setStatus(data.status || "pending");
-      })
-      .catch((err) => console.error("Error fetching goal:", err));
+      } catch (err) {
+        console.error("Error fetching goal:", err);
+      }
+    };
+
+    fetchGoal();
   }, [id]);
 
   // Delete handler
-  const handleDelete = () => {
-    fetch(`http://localhost:5000/goals/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => {
-        if (res.ok) {
-          alert("Goal deleted!");
-          navigate("/");
-        } else {
-          alert("Failed to delete goal.");
-        }
-      })
-      .catch((err) => console.error("Error deleting goal:", err));
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`${API_URL}/goals/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        alert("Goal deleted!");
+        navigate("/");
+      } else {
+        alert("Failed to delete goal.");
+      }
+    } catch (err) {
+      console.error("Error deleting goal:", err);
+    }
   };
 
   // Update handler
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    fetch(`http://localhost:5000/goals/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, description, status }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setGoal(data);
-        setEditing(false);
-        alert("Goal updated!");
-      })
-      .catch((err) => console.error("Error updating goal:", err));
+    try {
+      const res = await fetch(`${API_URL}/goals/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, description, status }),
+      });
+      if (!res.ok) throw new Error("Failed to update goal");
+      const data = await res.json();
+      setGoal(data);
+      setEditing(false);
+      alert("Goal updated!");
+    } catch (err) {
+      console.error("Error updating goal:", err);
+    }
   };
 
   if (!goal) {
@@ -69,7 +78,9 @@ function GoalDetail() {
             <p>{goal.description}</p>
             <p>
               <strong>Status:</strong>{" "}
-              <span className={goal.status === "completed" ? "status-completed" : "status-pending"}>
+              <span
+                className={goal.status === "completed" ? "status-completed" : "status-pending"}
+              >
                 {goal.status}
               </span>
             </p>
