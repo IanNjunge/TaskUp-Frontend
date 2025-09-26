@@ -54,15 +54,15 @@ function Dashboard() {
 
       {/* Stats Section */}
       <div className="goal-stats">
-        <div className="goal-stat">
+        <div className="total-goals">
           <h2>{stats.total}</h2>
           <p>Total Goals</p>
         </div>
-        <div className="goal-stat">
+        <div className="completed-goals">
           <h2>{stats.completed}</h2>
           <p>Completed</p>
         </div>
-        <div className="goal-stat">
+        <div className="pending-goals">
           <h2>{stats.pending}</h2>
           <p>Pending</p>
         </div>
