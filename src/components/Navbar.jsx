@@ -11,8 +11,8 @@ function Navbar() {
 
         
         <nav className="nav-links">
-          <Link to="/" className="nav-link">Dashboard</Link>
-          <Link to="/new" className="nav-link">New Goal</Link>
+          <Link to="/" className="nav-link">Dashboard 🏠</Link>
+          <Link to="/new" className="nav-link">New Goal 📝</Link>
         </nav>
       </div>
     </header>
