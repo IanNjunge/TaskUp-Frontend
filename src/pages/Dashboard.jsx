@@ -1,30 +1,29 @@
 import { useEffect, useState } from "react";
 import GoalCard from "../components/GoalCard";
 
-
 function Dashboard() {
   const [goals, setGoals] = useState([]);
   const [stats, setStats] = useState({ total: 0, completed: 0, pending: 0 });
 
   useEffect(() => {
     fetch("http://localhost:5000/goals")
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         setGoals(data);
         updateStats(data);
       })
-      .catch(err => console.error("Error loading goals:", err));
+      .catch((err) => console.error("Error loading goals:", err));
   }, []);
 
   const updateStats = (goals) => {
     const total = goals.length;
-    const completed = goals.filter(goal => goal.status === "completed").length;
+    const completed = goals.filter((goal) => goal.status === "completed").length;
     const pending = total - completed;
     setStats({ total, completed, pending });
   };
 
   const handleMarkDone = async (id) => {
-    const updatedGoals = goals.map(goal =>
+    const updatedGoals = goals.map((goal) =>
       goal.id === id ? { ...goal, status: "completed" } : goal
     );
     setGoals(updatedGoals);
@@ -38,7 +37,7 @@ function Dashboard() {
   };
 
   const handleDeleteGoal = async (id) => {
-    const updatedGoals = goals.filter(goal => goal.id !== id);
+    const updatedGoals = goals.filter((goal) => goal.id !== id);
     setGoals(updatedGoals);
     updateStats(updatedGoals);
 
@@ -47,28 +46,32 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
+      {/* Section Header */}
       <div className="dashboard-header">
-        <h2>My Goals📈</h2>
+        <span>📈</span>
+        <h2>My Goals</h2>
       </div>
 
+      {/* Stats Section */}
       <div className="goal-stats">
         <div className="goal-stat">
-          <h3>Total Goals</h3>
-          <p>{stats.total}</p>
+          <h2>{stats.total}</h2>
+          <p>Total Goals</p>
         </div>
         <div className="goal-stat">
-          <h3>Completed</h3>
-          <p>{stats.completed}</p>
+          <h2>{stats.completed}</h2>
+          <p>Completed</p>
         </div>
         <div className="goal-stat">
-          <h3>Pending</h3>
-          <p>{stats.pending}</p>
+          <h2>{stats.pending}</h2>
+          <p>Pending</p>
         </div>
       </div>
 
+      {/* Goals List */}
       {goals.length > 0 ? (
         <div className="goal-list">
-          {goals.map(goal => (
+          {goals.map((goal) => (
             <GoalCard
               key={goal.id}
               goal={goal}

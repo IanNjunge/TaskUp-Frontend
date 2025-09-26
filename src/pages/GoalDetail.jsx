@@ -10,7 +10,7 @@ function GoalDetail() {
   const [status, setStatus] = useState("pending");
   const navigate = useNavigate();
 
-  // Fetch the goal on mount
+  // Fetch the goal
   useEffect(() => {
     fetch(`http://localhost:5000/goals/${id}`)
       .then((res) => res.json())
@@ -61,53 +61,70 @@ function GoalDetail() {
   }
 
   return (
-    <div className="GoalDetail container">
-      <div className="card">
+    <div className="goal-detail-container">
+      <div className="goal-detail-card">
         {!editing ? (
           <>
             <h1>{goal.title}</h1>
             <p>{goal.description}</p>
-            <p>Status: <strong>{goal.status}</strong></p>
-            <p>Deadline: {goal.deadline || "No deadline set"}</p>
+            <p>
+              <strong>Status:</strong>{" "}
+              <span className={goal.status === "completed" ? "status-completed" : "status-pending"}>
+                {goal.status}
+              </span>
+            </p>
+            <p>
+              <strong>Deadline:</strong> {goal.deadline || "No deadline set"}
+            </p>
 
-            <button className="btn" onClick={() => setEditing(true)}>
-              Edit Goal
-            </button>
-            <button className="btn delete-btn" onClick={handleDelete}>
-              Delete Goal
-            </button>
+            <div className="goal-detail-buttons">
+              <button className="btn edit-btn" onClick={() => setEditing(true)}>
+                ✏️ Edit
+              </button>
+              <button className="btn delete-btn" onClick={handleDelete}>
+                🗑 Delete
+              </button>
+            </div>
           </>
         ) : (
-          <form onSubmit={handleUpdate}>
-            <div>
-              <label>Title: </label>
+          <form onSubmit={handleUpdate} className="goal-edit-form">
+            <div className="form-group">
+              <label>Title</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-            <div>
-              <label>Description: </label>
+
+            <div className="form-group">
+              <label>Description</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-            <div>
-              <label>Status: </label>
+
+            <div className="form-group">
+              <label>Status</label>
               <select value={status} onChange={(e) => setStatus(e.target.value)}>
                 <option value="pending">Pending</option>
-                <option value="done">Done</option>
+                <option value="completed">Completed</option>
               </select>
             </div>
 
-            <button className="btn" type="submit">
-              Save
-            </button>
-            <button type="button" className="btn cancel-btn" onClick={() => setEditing(false)}>
-              Cancel
-            </button>
+            <div className="goal-detail-buttons">
+              <button className="btn save-btn" type="submit">
+                💾 Save
+              </button>
+              <button
+                type="button"
+                className="btn cancel-btn"
+                onClick={() => setEditing(false)}
+              >
+                ✖ Cancel
+              </button>
+            </div>
           </form>
         )}
       </div>
