@@ -49,7 +49,7 @@ function Dashboard() {
       {/* Section Header */}
       <div className="dashboard-header">
         <span>📈</span>
-        <h2>My Goals</h2>
+        <h2>Dashboard</h2>
       </div>
 
       {/* Stats Section */}
